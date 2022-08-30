@@ -6,7 +6,7 @@
 #include "inv_mpu_dmp_motion_driver.h"
 #include "OLED.h"
 
-//正点原子MPU6050驱动
+//MPU6050驱动
 
 struct MPU6050				//MPU6050结构体
 {

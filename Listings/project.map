@@ -2382,7 +2382,7 @@ Image component sizes
        220         26          0          4          0       1615   delay.o
       6864        290        157         53          0      31160   inv_mpu.o
       3096        122       3062          0         16      20042   inv_mpu_dmp_motion_driver.o
-       392        148          0         27        100       3642   main.o
+       392        148          0         27        100       3634   main.o
         60         10          0          0          0     202617   misc.o
       1402        130          0          2          0       9291   mpu6050.o
        658        100          0          0          0       4522   mpuiic.o
@@ -2398,7 +2398,7 @@ Image component sizes
        328         28          0         20          0      31981   system_stm32f10x.o
 
     ----------------------------------------------------------------------
-     15950       1002       5016        140       1140     395610   Object Totals
+     15950       1002       5016        140       1140     395602   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         14          0          9          4          0          0   (incl. Padding)
 
@@ -2477,8 +2477,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     21416       1244       5256        148       1140     390382   Grand Totals
-     21416       1244       5256        148       1140     390382   ELF Image Totals
+     21416       1244       5256        148       1140     390374   Grand Totals
+     21416       1244       5256        148       1140     390374   ELF Image Totals
      21416       1244       5256        148          0          0   ROM Totals
 
 ==============================================================================

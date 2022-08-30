@@ -20,14 +20,6 @@ short aacx,aacy,aacz;		//加速度传感器原始数据  angular acceleration
 short gyrox,gyroy,gyroz;	//陀螺仪原始数据  gyroscope
 short temp;					//温度
 
-/*
-struct MPU6050				//MPU6050结构体
-{
-	u8 flag;				//采集成功标志位
-	u8 speed;				//上报速度
-} mpu6050;					//唯一结构体变量
-*/
-
 union DATA {
 	float Recive[4];
 	uint8_t send[32];

@@ -41,72 +41,10 @@ void SYS_Init()
 	OLED_Clear();
 	OLED_ShowString(1,5,"OK!");						 //显示字符串
 	delay_ms(999);									 //延时初界面显示
-	//mpu6050.flag = 0;                                //采集成功标志位初始化
-	//mpu6050.speed = 0;								 //上报速度初始化
 	
 	//TIM_Cmd(TIM1, ENABLE);
 }
-/*
-void MPU_Read()
-{
-	
-	if(mpu_dmp_get_data(&pitch,&roll,&yaw)==0)			//dmp处理得到数据，对返回值进行判断
-	{ 
-		temp = MPU_Get_Temperature();	                //得到温度值
-		MPU_Get_Accelerometer(&aacx,&aacy,&aacz);	    //得到加速度传感器数据
-		MPU_Get_Gyroscope(&gyrox,&gyroy,&gyroz);		//得到陀螺仪数据
-		mpu6050.speed++;                            	//上报速度自加
-		if(mpu6050.speed == 4)							//上报速度阈值设置
-		{
-			mpu6050.flag = 1;							//采集成功标志位设置为有效
-			mpu6050.speed = 0;							//上报速度归零
-		}
 
-	}
-	else 												//采集不成功										
-	{
-		mpu6050.flag = 0;								//采集成功标志位设置为无效
-	}	
-}
-
-void DATA_Report(void)
-{
-	if(mpu6050.flag == 1)							 //采集成功时
-	{ 
-		temp = pitch * 10;							 //赋temp为pitch
-		if(temp < 0) {								 //对数据正负判断，判断为负时
-			temp = -temp;						     //对负数据取反		
-		}
-		else{}                                    	 
-		OLED_ShowString(2, 1, "Pitch:00.0");	
-		OLED_ShowNum(2, 7, temp / 10, 2);
-		OLED_ShowNum(2, 10, temp % 10, 1);
-			
-		temp = roll * 10;                            
-		if(temp < 0)									 //对数据正负判断，判断为负时
-		{
-			temp = -temp;						   	  	 //对负数据取反	
-		}
-		else{}                                   	 //判断为正时
-		OLED_ShowString(3, 1, "Roll:00.0");	
-		OLED_ShowNum(3, 6, temp / 10, 2);
-		OLED_ShowNum(3, 9, temp % 10, 1);
-		
-		temp = yaw * 10;                           
-		if(temp < 0)								//对数据正负判断，判断为负时
-		{
-			temp = -temp;						    //对负数据取反
-		}
-		else{}                                    //判断为正时
-		OLED_ShowString(4, 1, "Yaw:00.0");	
-		OLED_ShowNum(4, 5, temp / 10, 2);
-		OLED_ShowNum(4, 8, temp % 10, 1);
-			
-		mpu6050.flag = 0;						//复位	
-	}
-	else;										//防卡死
-}
-*/
 void Check(void) {
 	status = NRF_Check(); 
 
