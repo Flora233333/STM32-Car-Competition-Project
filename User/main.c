@@ -1,6 +1,5 @@
 #include "main.h"
 
-uint8_t Ds18b20 [8];
 uint8_t txbuf[32];
 union DATA re;
 uint8_t status;
@@ -28,8 +27,6 @@ void SYS_Init()
 	Check();
 	NRF_RX_Mode(); 									 //默认接收模式
 	
-	DS18B20_Init();
-	DS18B20_ReadId(Ds18b20);
 	
 	Timer1_InternalClock_Init();
 
@@ -130,8 +127,6 @@ void Check(void) {
 }
 
 void Send_Data(void) {
-	
-	re.Recive[0] = DS18B20_GetTemp_MatchRom(Ds18b20); //温度值
 	
 	NRF_TX_Mode();
 			   

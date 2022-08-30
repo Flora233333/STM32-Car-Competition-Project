@@ -8,7 +8,7 @@
 #include "NRF24L01.h"
 #include "Timer.h"
 #include "bsp_usart.h"
-#include "bsp_ds18b20.h"
+//#include "bsp_ds18b20.h"
 #include "sys.h"
 #include "bsp_beep.h"  
 #include "inv_mpu.h"
@@ -25,7 +25,7 @@ struct MPU6050				//MPU6050结构体
 {
 	u8 flag;				//采集成功标志位
 	u8 speed;				//上报速度
-}mpu6050;					//唯一结构体变量
+} mpu6050;					//唯一结构体变量
 
 union DATA {
 	float Recive[4];
