@@ -648,6 +648,31 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>eMPL</GroupName>
+          <Files>
+            <File>
+              <FileName>inv_mpu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\eMPL\inv_mpu.c</FilePath>
+            </File>
+            <File>
+              <FileName>inv_mpu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\eMPL\inv_mpu.h</FilePath>
+            </File>
+            <File>
+              <FileName>inv_mpu_dmp_motion_driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\eMPL\inv_mpu_dmp_motion_driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>inv_mpu_dmp_motion_driver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\eMPL\inv_mpu_dmp_motion_driver.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>System</GroupName>
           <Files>
             <File>
@@ -721,26 +746,6 @@
               <FilePath>.\Hardware\mpuiic.h</FilePath>
             </File>
             <File>
-              <FileName>inv_mpu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\eMPL\inv_mpu.c</FilePath>
-            </File>
-            <File>
-              <FileName>inv_mpu.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\eMPL\inv_mpu.h</FilePath>
-            </File>
-            <File>
-              <FileName>inv_mpu_dmp_motion_driver.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\eMPL\inv_mpu_dmp_motion_driver.c</FilePath>
-            </File>
-            <File>
-              <FileName>inv_mpu_dmp_motion_driver.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\eMPL\inv_mpu_dmp_motion_driver.h</FilePath>
-            </File>
-            <File>
               <FileName>bsp_usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Hardware\bsp_usart.c</FilePath>
@@ -759,16 +764,6 @@
               <FileName>NRF24L01.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Hardware\NRF24L01.h</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_beep.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\bsp_beep.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_beep.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\bsp_beep.h</FilePath>
             </File>
           </Files>
         </Group>

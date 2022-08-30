@@ -20,7 +20,6 @@ void SYS_Init()
 	OLED_Init();									 //OLED初始化
 	MPU_Init();										 //初始化MPU6050
     
-    BEEP_GPIO_Config();
 	USART_Config();
 	
 	SPI_NRF_Init();
@@ -28,7 +27,7 @@ void SYS_Init()
 	NRF_RX_Mode(); 									 //默认接收模式
 	
 	
-	Timer1_InternalClock_Init();
+	//Timer1_InternalClock_Init();
 
 	while(mpu_dmp_init())                            //初始化mpu_dmp库
  	{
@@ -42,12 +41,12 @@ void SYS_Init()
 	OLED_Clear();
 	OLED_ShowString(1,5,"OK!");						 //显示字符串
 	delay_ms(999);									 //延时初界面显示
-	mpu6050.flag = 0;                                //采集成功标志位初始化
-	mpu6050.speed = 0;								 //上报速度初始化
+	//mpu6050.flag = 0;                                //采集成功标志位初始化
+	//mpu6050.speed = 0;								 //上报速度初始化
 	
-	TIM_Cmd(TIM1, ENABLE);
+	//TIM_Cmd(TIM1, ENABLE);
 }
-
+/*
 void MPU_Read()
 {
 	
@@ -62,15 +61,7 @@ void MPU_Read()
 			mpu6050.flag = 1;							//采集成功标志位设置为有效
 			mpu6050.speed = 0;							//上报速度归零
 		}
-		re.Recive[1] = pitch;
-		re.Recive[2] = roll;
-		re.Recive[3] = yaw;
-        
-        if (pitch > 60 || pitch < -60 || roll > 60 || roll < -60)
-            BEEP(ON);
-        else 
-            BEEP(OFF);
-       
+
 	}
 	else 												//采集不成功										
 	{
@@ -115,7 +106,7 @@ void DATA_Report(void)
 	}
 	else;										//防卡死
 }
-
+*/
 void Check(void) {
 	status = NRF_Check(); 
 
