@@ -57,17 +57,17 @@
 
 /* NRF1 π‹Ω≈ */
 
-#define NRF_CSN_GPIO_PORT    GPIOC
-#define NRF_CSN_PIN          GPIO_Pin_6
-#define NRF_CSN_GPIO_CLK     RCC_APB2Periph_GPIOC
+#define NRF_CSN_GPIO_PORT    GPIOB
+#define NRF_CSN_PIN          GPIO_Pin_11
+#define NRF_CSN_GPIO_CLK     RCC_APB2Periph_GPIOB
 
-#define NRF_CE_GPIO_PORT     GPIOC
-#define NRF_CE_PIN           GPIO_Pin_5
-#define NRF_CE_GPIO_CLK      RCC_APB2Periph_GPIOC
+#define NRF_CE_GPIO_PORT     GPIOB
+#define NRF_CE_PIN           GPIO_Pin_10
+#define NRF_CE_GPIO_CLK      RCC_APB2Periph_GPIOB
 
-#define NRF_IRQ_GPIO_PORT    GPIOC
-#define NRF_IRQ_PIN          GPIO_Pin_4
-#define NRF_IRQ_GPIO_CLK     RCC_APB2Periph_GPIOC
+#define NRF_IRQ_GPIO_PORT    GPIOB
+#define NRF_IRQ_PIN          GPIO_Pin_5
+#define NRF_IRQ_GPIO_CLK     RCC_APB2Periph_GPIOB
 
 #define NRF_CSN_HIGH()        GPIO_SetBits(NRF_CSN_GPIO_PORT, NRF_CSN_PIN)
 #define NRF_CSN_LOW()         GPIO_ResetBits(NRF_CSN_GPIO_PORT, NRF_CSN_PIN)		        //csn÷√µÕ
