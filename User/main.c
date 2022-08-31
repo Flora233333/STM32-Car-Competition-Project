@@ -30,7 +30,9 @@ void SYS_Init()
 	Check();                                         //检测NRF24L01
 	NRF_RX_Mode(); 									 //默认接收模式
 
-	//Timer1_InternalClock_Init();
+    Motor_Init();                                    //电机初始化
+
+    PWM_Init();                                      //PWM初始化
 
 	while(mpu_dmp_init())                            //初始化mpu_dmp库
  	{
@@ -44,8 +46,6 @@ void SYS_Init()
 	OLED_Clear();
 	OLED_ShowString(1,5,"OK!");						 //显示字符串
 	delay_ms(999);									 //延时初界面显示
-	
-	//TIM_Cmd(TIM1, ENABLE);
 
     mode.flag = 0;                                   //初始化mode参数   
     mode.status = 0;
@@ -53,7 +53,8 @@ void SYS_Init()
 
 void Mode_Select(void) {
 
-    if(mode.flag == 1) {
+    if(mode.flag == 1) 
+    {
         mode.flag = 0;
 
         switch (mode.status)

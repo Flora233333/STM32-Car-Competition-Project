@@ -13,6 +13,8 @@ void Motor_Init() {
     GPIO_InitStruct.GPIO_Pin =  GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
     GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
     GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+    Encoder_Init();                                       //编码器初始化
 }
 
 /**
@@ -101,10 +103,10 @@ void Turn_Right(void) {
 
 }
 
-void TIM3_IRQHandler(void) {
-	if(TIM_GetITStatus(TIM3, TIM_IT_Update) != 0)
+void TIM2_IRQHandler(void) {
+	if(TIM_GetITStatus(TIM2, TIM_IT_Update) != 0)
 	{
-		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
+		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
 	}
 }
 

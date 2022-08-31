@@ -5,7 +5,7 @@
   * @param  无
   * @retval 无
   */
-void PWM_Init() {
+void PWM_Init(void) {
 	RCC_APB1PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 	
@@ -15,7 +15,7 @@ void PWM_Init() {
 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOA, &GPIO_InitStruct);
 	
-	TIM_InternalClockConfig(TIM1);
+	//TIM_InternalClockConfig(TIM1);
 	
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStruct;
 	TIM_TimeBaseInitStruct.TIM_ClockDivision = TIM_CKD_DIV1;
@@ -40,16 +40,12 @@ void PWM_Init() {
 
     TIM_Cmd(TIM1, ENABLE);
 	TIM_CtrlPWMOutputs(TIM1,ENABLE);        //确定让TIM1输出PWM
-    
+
 	TIM_ARRPreloadConfig(TIM1,ENABLE);      //自动重装载预装载允许
 }
 
 void PWM_Restrict(int *Motor_1, int *Motor_2) {
-	if(*Motor_1 > 800) *Motor_1 = 800;
-	if(*Motor_2 > 800) *Motor_2 = 800;
-	
-	if(*Motor_1 < -800) *Motor_1 = -800;
-	if(*Motor_2 < -800) *Motor_2 = -800;
+
 }
 
 void PWM_Updata(int Motor_1, int Motor_2) {
@@ -73,6 +69,6 @@ void PWM_Updata(int Motor_1, int Motor_2) {
 		Motor_2 = -1 * Motor_2;
 	}
 	
-	TIM_SetCompare3(TIM2, Motor_1);
-	TIM_SetCompare4(TIM2, Motor_2);
+	TIM_SetCompare1(TIM1, Motor_1);
+	TIM_SetCompare4(TIM1, Motor_2);
 }
