@@ -46,37 +46,43 @@ void SYS_Init()
 	delay_ms(999);									 //延时初界面显示
 	
 	//TIM_Cmd(TIM1, ENABLE);
+
+    mode.flag = 0;                                   //初始化mode参数   
+    mode.status = 0;
 }
 
 void Mode_Select(void) {
 
-    switch (mode.status)
-    {
-    case 0: //停车
+    if(mode.flag == 1) {
+        mode.flag = 0;
 
-        break;
+        switch (mode.status)
+        {
+        case 0: //停车
+            Stop();
+            break;
 
-    case 1: //前进
+        case 1: //前进
+            Go_Ahead();
+            break;
 
-        break;
+        case 2: //后退
+            Go_Back();
+            break;
 
-    case 2: //后退
+        case 3: //左转
+            Turn_Left();
+            break;
 
-        break;
+        case 4: //右转
+            Turn_Right();
+            break;
 
-    case 3: //左转
-
-        break;
-
-    case 4: //右转
-
-        break;
-
-    default:
-        printf("Error:%s, %d\r\n", __FILE__, __LINE__);
-        break;
+        default:
+            printf("Error:%s, %d\r\n", __FILE__, __LINE__);
+            break;
+        }
     }
-
 }
 
 void Check(void) {
@@ -90,19 +96,18 @@ void Check(void) {
 }
 
 void Receive_Data(void) {
-    uint8_t i = 0;
     /* 等待接收数据 */
 	status = NRF_Rx_Dat(rxbuf.raw);
 
 	/* 判断接收状态 */
 	if(status == RX_DR)
 	{
-        for(i=0;i<32;i++)
-        {	
-            printf("\r\nRecive Data = %d \r\n",rxbuf.raw[i]); 
+        if(rxbuf.raw[0] == 0xFF && rxbuf.raw[2] == 0xFF)
+        {
+            mode.flag = 1;
+            mode.status = rxbuf.raw[1]; 
+            printf("\r\nRecive Data\r\n"); 
         }
-            
-        printf("\r\nRecive Mode\r\n"); 
     }	
     
     Mode_Select();

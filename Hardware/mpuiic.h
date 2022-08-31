@@ -5,14 +5,14 @@
 //正点原子MPU6050通讯线驱动
 	   		   
 //IO方向设置
-#define MPU_SDA_IN()  {GPIOB->CRL&=0X0FFFFFFF;GPIOB->CRL|=(u32)8<<28;}
-#define MPU_SDA_OUT() {GPIOB->CRL&=0X0FFFFFFF;GPIOB->CRL|=(u32)3<<28;}
+#define MPU_SDA_IN()  {GPIOB->CRL&=0XFFFFFFF0;GPIOB->CRL|=(u32)8<<0;}
+#define MPU_SDA_OUT() {GPIOB->CRL&=0XFFFFFFF0;GPIOB->CRL|=(u32)3<<0;}
 
 
 //IO操作函数	 
-#define MPU_IIC_SCL    PBout(6) 		//SCL
-#define MPU_IIC_SDA    PBout(7) 		//SDA	 
-#define MPU_READ_SDA   PBin(7) 		//输入SDA 
+#define MPU_IIC_SCL    PBout(1) 		//SCL
+#define MPU_IIC_SDA    PBout(0) 		//SDA	 
+#define MPU_READ_SDA   PBin(0) 		//输入SDA 
 
 //IIC所有操作函数
 void MPU_IIC_Delay(void);				//MPU IIC延时函数
