@@ -49,6 +49,8 @@ void SYS_Init()
 
     mode.flag = 0;                                   //初始化mode参数   
     mode.status = 0;
+    
+    //PWM_Init();                                      //PWM初始化
 }
 
 void Mode_Select(void) {

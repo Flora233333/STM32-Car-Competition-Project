@@ -13,3 +13,4 @@
 ### 2022.8.31
     Add NRF24L01 component
     Config data package agreement
+    Config PWM, Encoder and Motor

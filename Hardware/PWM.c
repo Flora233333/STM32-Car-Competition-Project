@@ -35,6 +35,9 @@ void PWM_Init(void) {
 	TIM_OC4Init(TIM1,&TIM_OCInitStruct); //初始化函数 让刚刚配置的参数 输入到对应寄存器里面
 	TIM_Cmd(TIM1,ENABLE);                //使能定时器TIM1
 	TIM_CtrlPWMOutputs(TIM1,ENABLE);     //确定让TIM1输入PWM
+    TIM_OC1PreloadConfig(TIM1,ENABLE);   //让捕获/比较1寄存器 预装载功能使能 同时配置CC1通道为输出
+	TIM_OC4PreloadConfig(TIM1,ENABLE);   //让捕获/比较1寄存器 预装载功能使能 同时配置CC4通道为输出
+	TIM_ARRPreloadConfig(TIM1,ENABLE);   //自动重装载预装载允许
 }
 
 void PWM_Restrict(int *Motor_1, int *Motor_2) {
