@@ -1,8 +1,8 @@
 #include "main.h"
 
-uint8_t rxbuf[32];
-union DATA re;
-uint8_t status;
+Control mode;
+union DATA rxbuf; //接收数据缓冲区
+uint8_t status;   //无线模块状态
 
 int main() {
 
@@ -26,8 +26,8 @@ void SYS_Init()
 	MPU_Init();										 //MPU6050初始化
 	USART_Config();                                  //串口初始化
 	
-	SPI_NRF_Init();
-	Check();
+	SPI_NRF_Init();                                  //NRF24L01初始化
+	Check();                                         //检测NRF24L01
 	NRF_RX_Mode(); 									 //默认接收模式
 
 	//Timer1_InternalClock_Init();
@@ -48,6 +48,37 @@ void SYS_Init()
 	//TIM_Cmd(TIM1, ENABLE);
 }
 
+void Mode_Select(void) {
+
+    switch (mode.status)
+    {
+    case 0: //停车
+
+        break;
+
+    case 1: //前进
+
+        break;
+
+    case 2: //后退
+
+        break;
+
+    case 3: //左转
+
+        break;
+
+    case 4: //右转
+
+        break;
+
+    default:
+        printf("Error:%s, %d\r\n", __FILE__, __LINE__);
+        break;
+    }
+
+}
+
 void Check(void) {
 	status = NRF_Check(); 
 
@@ -61,17 +92,20 @@ void Check(void) {
 void Receive_Data(void) {
     uint8_t i = 0;
     /* 等待接收数据 */
-	status = NRF_Rx_Dat(rxbuf);
+	status = NRF_Rx_Dat(rxbuf.raw);
 
 	/* 判断接收状态 */
 	if(status == RX_DR)
 	{
         for(i=0;i<32;i++)
         {	
-            printf("\r\nRecive Data = %d \r\n",rxbuf[i]); 
+            printf("\r\nRecive Data = %d \r\n",rxbuf.raw[i]); 
         }
             
         printf("\r\nRecive Mode\r\n"); 
     }	
+    
+    Mode_Select();
+
     NRF_RX_Mode();  
 }
