@@ -1,15 +1,19 @@
 #include "main.h"
 
-uint8_t txbuf[32];
+uint8_t rxbuf[32];
 union DATA re;
 uint8_t status;
 
 int main() {
+
 	SYS_Init();
+
 	while(1) {
-		MPU_Read();    //MPU6050数据读取
-		DATA_Report(); //MPU6050数据上报
-				
+		MPU_Read();     //MPU6050数据读取
+
+		DATA_Report();  //MPU6050数据上报
+
+		Receive_Data(); //接收数据
 	}
 }
 
@@ -55,33 +59,19 @@ void Check(void) {
 }
 
 void Receive_Data(void) {
+    uint8_t i = 0;
+    /* 等待接收数据 */
+	status = NRF_Rx_Dat(rxbuf);
 
+	/* 判断接收状态 */
+	if(status == RX_DR)
+	{
+        for(i=0;i<32;i++)
+        {	
+            printf("\r\nRecive Data = %d \r\n",rxbuf[i]); 
+        }
+            
+        printf("\r\nRecive Mode\r\n"); 
+    }	
+    NRF_RX_Mode();  
 }
-
-// void Send_Data(void) {
-	
-// 	NRF_TX_Mode();
-			   
-// 	status = NRF_Tx_Dat(re.send);
-		  
-// 	/* 发送数据的状态 */
-// 	if(status == TX_DS)
-// 	{
-// 		printf("\r\nSEND SUCCESS\r\n");
-// 	}
-// 	else
-// 	{
-// 		printf("\r\nERROR = 0x%x\r\n", status);
-// 	}
-		  
-// 	printf("\r\nRecive Mode\r\n"); 
-
-// 	NRF_RX_Mode();
-// }
-
-// void TIM1_UP_IRQHandler() {
-// 	if(TIM_GetITStatus(TIM1, TIM_IT_Update) == SET) {
-// 		Send_Data();						 
-// 		TIM_ClearITPendingBit(TIM1, TIM_IT_Update);
-// 	}
-// }

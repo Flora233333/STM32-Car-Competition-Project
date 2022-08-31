@@ -27,6 +27,5 @@ union DATA {
 
 int main(void);				//主函数
 void SYS_Init(void);		//系统初始化总函数
-void MPU_Read(void);		//MPU6050数据读取函数	
-void DATA_Report(void);		//MPU6050数据上报
 void Check(void);
+void Receive_Data(void);
