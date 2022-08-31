@@ -15,8 +15,8 @@ void PWM_Init(void) {
 	
 	TIM_TimeBaseInitStruct.TIM_ClockDivision = TIM_CKD_DIV1;     //这里跟TIM1 产生PWM波功能无关
 	TIM_TimeBaseInitStruct.TIM_CounterMode = TIM_CounterMode_Up; //向上计时模式
-	TIM_TimeBaseInitStruct.TIM_Period = 100 - 1;                 //计算到1000 那就是定时10ms
-	TIM_TimeBaseInitStruct.TIM_Prescaler = 720 - 1;              //最高频率72MHZ  这里定义 预分频720 
+	TIM_TimeBaseInitStruct.TIM_Period = 1000 - 1;                 
+	TIM_TimeBaseInitStruct.TIM_Prescaler = 0;              
 																							 
 	TIM_TimeBaseInit(TIM1,&TIM_TimeBaseInitStruct);              //初始化函数 让刚刚配置的参数 输入到对应寄存器里面
 	

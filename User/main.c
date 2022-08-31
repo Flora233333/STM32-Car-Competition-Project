@@ -32,7 +32,7 @@ void SYS_Init()
 
     Motor_Init();                                    //电机初始化
 
-    PWM_Init();                                      //PWM初始化
+    //PWM_Init();                                      //PWM初始化，原先在这一行时PWM没反应，调换至53行时PWM运行正常
 
 	while(mpu_dmp_init())                            //初始化mpu_dmp库
  	{
@@ -50,7 +50,7 @@ void SYS_Init()
     mode.flag = 0;                                   //初始化mode参数   
     mode.status = 0;
     
-    //PWM_Init();                                      //PWM初始化
+    PWM_Init();                                      //PWM初始化
 }
 
 void Mode_Select(void) {
