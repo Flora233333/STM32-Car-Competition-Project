@@ -1,6 +1,5 @@
 #include "main.h"
 
-Control mode;
 union DATA rxbuf; //接收数据缓冲区
 uint8_t status;   //无线模块状态
 
@@ -48,49 +47,11 @@ void SYS_Init()
 	OLED_Clear();
 	OLED_ShowString(1,5,"OK!");						 //显示字符串
 	delay_ms(999);									 //延时初界面显示
-
-    mode.flag = 0;                                   //初始化mode参数   
-    mode.status = 0;
     
     //Motor_Init();                                    //电机初始化
    
     PWM_Init();                                      //PWM初始化，长延时前面不要开定时器等时效性的东西
    
-}
-
-void Mode_Select(void) {
-
-    if(mode.flag == 1) 
-    {
-        mode.flag = 0;
-
-        switch (mode.status)
-        {
-        case 0: //停车
-            Stop();
-            break;
-
-        case 1: //前进
-            Go_Ahead();
-            break;
-
-        case 2: //后退
-            Go_Back();
-            break;
-
-        case 3: //左转
-            Turn_Left();
-            break;
-
-        case 4: //右转
-            Turn_Right();
-            break;
-
-        default:
-            printf("Error:%s, %d\r\n", __FILE__, __LINE__);
-            break;
-        }
-    }
 }
 
 void Check(void) {

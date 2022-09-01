@@ -20,11 +20,6 @@ short aacx,aacy,aacz;		//加速度传感器原始数据  angular acceleration
 short gyrox,gyroy,gyroz;	//陀螺仪原始数据  gyroscope
 short temp;					//温度
 
-typedef struct {
-    uint8_t status;           //模式
-    uint8_t flag;             //接收标志位
-} Control;
-
 union DATA {
 	float Recive[4];        //float读取
 	uint8_t raw[32];        //原始数据
