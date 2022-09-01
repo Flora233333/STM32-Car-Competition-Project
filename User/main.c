@@ -71,10 +71,11 @@ void Receive_Data(void) {
 	/* ÅÐ¶Ï½ÓÊÕ×´Ì¬ */
 	if(status == RX_DR)
 	{
-        if(rxbuf.raw[0] == 0xFF && rxbuf.raw[2] == 0xFF)
+        if(rxbuf.raw[0] == 0xFF && rxbuf.raw[3] == 0xFF)
         {
             mode.flag = 1;
             mode.status = rxbuf.raw[1]; 
+            mode.angle = rxbuf.raw[2];
             printf("\r\nRecive Data\r\n"); 
         }
     }	

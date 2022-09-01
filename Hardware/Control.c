@@ -2,20 +2,29 @@
 
 Control mode;
 
-float KP = 18;
-float KD = 0.18;
+float out = 0;
+float KP = 7;
+float KD = 0.07;
+float Ek = 0, Ek_0 = 0;
+
+int Motor_1 = 0, Motor_2 = 0;
 
 void Control_Init(void) {
     mode.flag = 0;                                   //初始化mode参数   
     mode.status = 0;
+    mode.angle = 0;
 }
 
-float PID_Turn(float x, float yaw) {
+float PID_Turn(float yaw) {
 	float Turn;     
-    float Bias;	
 
-	Bias = 90 - yaw;
-	Turn = -Bias * KP - yaw * KD;
+	// Bias = mode.angle - 90;
+	// Turn = -Bias * KP - yaw * KD;
+    Ek = mode.angle - yaw;
+
+    Turn = Ek * KP + (Ek - Ek_0) * KD;
+
+    Ek_0 = Ek;
 
 	return Turn;
 }
@@ -41,18 +50,31 @@ void Go_Back(void) {
     TIM_SetCompare4(TIM1, 200);
 }
 
-void Turn_Left(void) {
+void Turn(void) {
+    static int i = 0;
 
-}
+    out = PID_Turn(MPU_Data.yaw);
 
-void Turn_Right(void) {
+    Motor_1 = (int)out;
+    Motor_2 = (int)out;
 
+    PWM_Restrict(&Motor_1, &Motor_2);
+
+    PWM_Updata(Motor_1, Motor_2);
+
+    if(mode.angle == MPU_Data.yaw) { //判断是否到位
+        i++;
+        if(i > 20) {
+            i = 0;
+            mode.status = 0;         //停车
+        }
+    }
 }
 
 void Mode_Select(void) {
 
-    if(mode.flag == 1) 
-    {
+    //if(mode.flag == 1) 
+    //{
         mode.flag = 0;
 
         switch (mode.status)
@@ -69,17 +91,17 @@ void Mode_Select(void) {
             Go_Back();
             break;
 
-        case 3: //左转
-            Turn_Left();
+        case 3: //左转(由发送的数据包决定左右转)
+            Turn();
             break;
 
         case 4: //右转
-            Turn_Right();
+            Turn();
             break;
 
         default:
             printf("Error:%s, %d\r\n", __FILE__, __LINE__);
             break;
         }
-    }
+    //}
 }

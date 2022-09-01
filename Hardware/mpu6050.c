@@ -8,6 +8,8 @@
 
 //MPU6050驱动
 
+MPU MPU_Data;
+
 struct MPU6050				//MPU6050结构体
 {
 	u8 flag;				//采集成功标志位
@@ -257,7 +259,10 @@ void MPU_Read()
 			mpu6050.flag = 1;							//采集成功标志位设置为有效
 			mpu6050.speed = 0;							//上报速度归零
 		}
-
+        //printf("yaw = %f\r\n", yaw);
+        MPU_Data.pitch = pitch;
+        MPU_Data.roll = roll;
+        MPU_Data.yaw = yaw;
 	}
 	else 												//采集不成功										
 	{
@@ -300,7 +305,7 @@ void DATA_Report(void)
 			
 		mpu6050.flag = 0;						//复位	
 	}
-	else;										//防卡死
+	else {};									//防卡死
 }
 
 

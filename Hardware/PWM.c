@@ -46,7 +46,15 @@ void PWM_Init(void) {
 }
 
 void PWM_Restrict(int *Motor_1, int *Motor_2) {
+    if(*Motor_1 > 300)
+        *Motor_1 = 300;
+    if(*Motor_1 < -300)
+        *Motor_1 = -300;
 
+    if(*Motor_2 > 300)
+        *Motor_2 = 300;
+    if(*Motor_2 < -300)
+        *Motor_2 = -300;
 }
 
 void PWM_Updata(int Motor_1, int Motor_2) {
