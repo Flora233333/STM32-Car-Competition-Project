@@ -47,7 +47,7 @@ void Encoder_Init() {
 	TIM_TimeBaseInitStruct.TIM_ClockDivision = TIM_CKD_DIV1;
 	TIM_TimeBaseInitStruct.TIM_CounterMode = TIM_CounterMode_Up;
 	TIM_TimeBaseInitStruct.TIM_Period = 65535;  //配置成0xFFFF
-	TIM_TimeBaseInitStruct.TIM_Prescaler = 0x00; //不要分频,否则电机会一卡一卡的转（频率太粗）
+	TIM_TimeBaseInitStruct.TIM_Prescaler = 0x00; 
 	TIM_TimeBaseInitStruct.TIM_RepetitionCounter = 0;
 	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseInitStruct);
     TIM_TimeBaseInit(TIM4, &TIM_TimeBaseInitStruct);
@@ -84,15 +84,24 @@ void Motor2_SetDirct(uint16_t B1, uint16_t B2) {
 }
 
 void Stop(void) {
-
+    TIM_SetCompare1(TIM1, 0);
+    TIM_SetCompare4(TIM1, 0);
 }
 
 void Go_Ahead(void) {
+    Motor1_SetDirct(1, 0);
+    Motor2_SetDirct(1, 0);
 
+    TIM_SetCompare1(TIM1, 200);
+    TIM_SetCompare4(TIM1, 200);
 }
 
 void Go_Back(void) {
+    Motor1_SetDirct(0, 1);
+    Motor2_SetDirct(0, 1);
 
+    TIM_SetCompare1(TIM1, 200);
+    TIM_SetCompare4(TIM1, 200);
 }
 
 void Turn_Left(void) {

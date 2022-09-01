@@ -34,6 +34,8 @@ void SYS_Init()
 
     //PWM_Init();                                      //PWM初始化，原先在这一行时PWM没反应，调换至53行时PWM运行正常
 
+    //Timer3_InternalClock_Init();
+
 	while(mpu_dmp_init())                            //初始化mpu_dmp库
  	{
 		OLED_ShowString(1,1,"Failed");			 	 //显示字符串                          
@@ -50,7 +52,10 @@ void SYS_Init()
     mode.flag = 0;                                   //初始化mode参数   
     mode.status = 0;
     
-    PWM_Init();                                      //PWM初始化
+    //Motor_Init();                                    //电机初始化
+   
+    PWM_Init();                                      //PWM初始化，长延时前面不要开定时器等时效性的东西
+   
 }
 
 void Mode_Select(void) {
