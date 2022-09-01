@@ -13,6 +13,7 @@
 #include "inv_mpu_dmp_motion_driver.h"
 #include "Motor.h"
 #include "PWM.h"  
+#include "Control.h"
 
 float pitch,roll,yaw; 		//欧拉角:俯仰角，偏航角，滚转角
 short aacx,aacy,aacz;		//加速度传感器原始数据  angular acceleration

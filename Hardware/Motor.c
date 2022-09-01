@@ -30,6 +30,7 @@ void Encoder_Init() {
     //使能定时器
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE); 
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
+    
     //因为编码器模式使用的就是通道1和通道2，这个是固定的，通道3和通道4不可配置为编码器模式，硬件设计时要注意。   
     GPIO_InitTypeDef GPIO_InitStructure;
 	
@@ -81,35 +82,6 @@ void Motor1_SetDirct(uint16_t A1, uint16_t A2) {
 void Motor2_SetDirct(uint16_t B1, uint16_t B2) { 
     GPIO_WriteBit(GPIOB, GPIO_Pin_13, (BitAction)B1);
 	GPIO_WriteBit(GPIOB, GPIO_Pin_12, (BitAction)B2);
-}
-
-void Stop(void) {
-    TIM_SetCompare1(TIM1, 0);
-    TIM_SetCompare4(TIM1, 0);
-}
-
-void Go_Ahead(void) {
-    Motor1_SetDirct(1, 0);
-    Motor2_SetDirct(1, 0);
-
-    TIM_SetCompare1(TIM1, 200);
-    TIM_SetCompare4(TIM1, 200);
-}
-
-void Go_Back(void) {
-    Motor1_SetDirct(0, 1);
-    Motor2_SetDirct(0, 1);
-
-    TIM_SetCompare1(TIM1, 200);
-    TIM_SetCompare4(TIM1, 200);
-}
-
-void Turn_Left(void) {
-
-}
-
-void Turn_Right(void) {
-
 }
 
 void TIM2_IRQHandler(void) {

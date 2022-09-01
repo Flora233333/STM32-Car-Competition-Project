@@ -34,7 +34,7 @@ void SYS_Init()
 
     //PWM_Init();                                      //PWM初始化，原先在这一行时PWM没反应，调换至53行时PWM运行正常
 
-    //Timer3_InternalClock_Init();
+    //Timer3IT_Init();
 
 	while(mpu_dmp_init())                            //初始化mpu_dmp库
  	{

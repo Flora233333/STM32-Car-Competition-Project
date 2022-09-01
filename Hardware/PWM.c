@@ -18,7 +18,7 @@ void PWM_Init(void) {
 	TIM_TimeBaseInitStruct.TIM_ClockDivision = TIM_CKD_DIV1;     //这里跟TIM1 产生PWM波功能无关
 	TIM_TimeBaseInitStruct.TIM_CounterMode = TIM_CounterMode_Up; //向上计时模式
 	TIM_TimeBaseInitStruct.TIM_Period = 1000 - 1;                 
-	TIM_TimeBaseInitStruct.TIM_Prescaler = 0;                  //不要分频,否则电机会一卡一卡的转（频率太粗）
+	TIM_TimeBaseInitStruct.TIM_Prescaler = 0;                    //不要分频,否则电机会一卡一卡的转（频率太粗）
 																							 
 	TIM_TimeBaseInit(TIM1,&TIM_TimeBaseInitStruct);              //初始化函数 让刚刚配置的参数 输入到对应寄存器里面
 	
@@ -29,6 +29,7 @@ void PWM_Init(void) {
 	GPIO_Init(GPIOA,&GPIO_InitStruct);                           //初始化函数 让刚刚配置的参数 输入到对应寄存器里面
 	
     TIM_OCStructInit(&TIM_OCInitStruct);                         //以后必须带这句，否则会有意想不到的BUG
+
 	TIM_OCInitStruct.TIM_OCMode = TIM_OCMode_PWM1;               //PWM1模式
 	TIM_OCInitStruct.TIM_OCPolarity = TIM_OCPolarity_High;       //输出极性高
 	TIM_OCInitStruct.TIM_OutputState = TIM_OutputState_Enable;   //让捕获/比较寄存器使能
@@ -38,6 +39,7 @@ void PWM_Init(void) {
 	TIM_OC4Init(TIM1,&TIM_OCInitStruct); //初始化函数 让刚刚配置的参数 输入到对应寄存器里面
 	TIM_Cmd(TIM1,ENABLE);                //使能定时器TIM1
 	TIM_CtrlPWMOutputs(TIM1,ENABLE);     //确定让TIM1输入PWM
+    
     TIM_OC1PreloadConfig(TIM1,TIM_OCPreload_Enable);   //让捕获/比较1寄存器 预装载功能使能 同时配置CC1通道为输出
 	TIM_OC4PreloadConfig(TIM1,TIM_OCPreload_Enable);   //让捕获/比较1寄存器 预装载功能使能 同时配置CC4通道为输出
 	TIM_ARRPreloadConfig(TIM1,ENABLE);   //自动重装载预装载允许

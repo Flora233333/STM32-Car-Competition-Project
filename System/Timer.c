@@ -1,7 +1,7 @@
 #include "stm32f10x.h"                  // Device header
 
-void Timer3_InternalClock_Init() {
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE); //使能时钟
+void Timer3IT_Init() {
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE); //使能时钟，别写错成APB2了
 	
 	TIM_InternalClockConfig(TIM3); //选择晶振源
 	
