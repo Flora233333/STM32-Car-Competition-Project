@@ -250,6 +250,11 @@ void MPU_Read()
 	
 	if(mpu_dmp_get_data(&pitch,&roll,&yaw)==0)			//dmp处理得到数据，对返回值进行判断
 	{ 
+        
+        MPU_Data.pitch = pitch;
+        MPU_Data.roll = roll;
+        MPU_Data.yaw = yaw;
+        
 		temp = MPU_Get_Temperature();	                //得到温度值
 		MPU_Get_Accelerometer(&aacx,&aacy,&aacz);	    //得到加速度传感器数据
 		MPU_Get_Gyroscope(&gyrox,&gyroy,&gyroz);		//得到陀螺仪数据
@@ -260,9 +265,6 @@ void MPU_Read()
 			mpu6050.speed = 0;							//上报速度归零
 		}
         //printf("yaw = %f\r\n", yaw);
-        MPU_Data.pitch = pitch;
-        MPU_Data.roll = roll;
-        MPU_Data.yaw = yaw;
 	}
 	else 												//采集不成功										
 	{

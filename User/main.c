@@ -23,6 +23,7 @@ void SYS_Init()
 
 	OLED_Init();									 //OLED初始化
 	MPU_Init();										 //MPU6050初始化
+    Control_Init();                                  //控制初始化
 	USART_Config();                                  //串口初始化
 	
 	SPI_NRF_Init();                                  //NRF24L01初始化

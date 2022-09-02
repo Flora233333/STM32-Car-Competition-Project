@@ -2,6 +2,7 @@
 
 Control mode;
 
+int i = 0;
 float out = 0;
 float KP = 7;
 float KD = 0.07;
@@ -11,7 +12,7 @@ int Motor_1 = 0, Motor_2 = 0;
 
 void Control_Init(void) {
     mode.flag = 0;                                   //初始化mode参数   
-    mode.status = 0;
+    mode.status = 1;
     mode.angle = 0;
 }
 
@@ -51,7 +52,7 @@ void Go_Back(void) {
 }
 
 void Turn(void) {
-    static int i = 0;
+    printf("yaw = %f  ", MPU_Data.yaw);
 
     out = PID_Turn(MPU_Data.yaw);
 
@@ -61,10 +62,11 @@ void Turn(void) {
     PWM_Restrict(&Motor_1, &Motor_2);
 
     PWM_Updata(Motor_1, Motor_2);
-
-    if(mode.angle == MPU_Data.yaw) { //判断是否到位
+    
+    if((mode.angle - MPU_Data.yaw <= 2) && (mode.angle - MPU_Data.yaw >= -2)) { //判断是否到位
+        printf("del = %f  ", mode.angle - MPU_Data.yaw);
         i++;
-        if(i > 20) {
+        if(i > 10) {
             i = 0;
             mode.status = 0;         //停车
         }
@@ -79,28 +81,35 @@ void Mode_Select(void) {
 
         switch (mode.status)
         {
-        case 0: //停车
+        case 1: //停车
             Stop();
+            printf("Stop\r\n");
             break;
 
-        case 1: //前进
+        case 2: //前进
             Go_Ahead();
+            printf("Go_Ahead\r\n");
             break;
 
-        case 2: //后退
+        case 3: //后退
             Go_Back();
+            printf("Go_Back\r\n");
             break;
 
-        case 3: //左转(由发送的数据包决定左右转)
+        case 4: //左转(由发送的数据包决定左右转)
             Turn();
+            mode.angle = 90;
+            printf("Turn Left %d\r\n", mode.angle);
             break;
 
-        case 4: //右转
+        case 5: //右转
             Turn();
+            mode.angle = -90;
+            printf("Turn Right %d\r\n", mode.angle);
             break;
 
         default:
-            printf("Error:%s, %d\r\n", __FILE__, __LINE__);
+            //printf("Error:%s, %d\r\n", __FILE__, __LINE__);
             break;
         }
     //}
