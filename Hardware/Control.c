@@ -39,16 +39,16 @@ void Go_Ahead(void) {
     Motor1_SetDirct(1, 0);
     Motor2_SetDirct(1, 0);
 
-    TIM_SetCompare1(TIM1, 200);
-    TIM_SetCompare4(TIM1, 200);
+    TIM_SetCompare1(TIM1, 300);
+    TIM_SetCompare4(TIM1, 300);
 }
 
 void Go_Back(void) {
     Motor1_SetDirct(0, 1);
     Motor2_SetDirct(0, 1);
 
-    TIM_SetCompare1(TIM1, 200);
-    TIM_SetCompare4(TIM1, 200);
+    TIM_SetCompare1(TIM1, 300);
+    TIM_SetCompare4(TIM1, 300);
 }
 
 void Turn(void) {
@@ -109,7 +109,7 @@ void Mode_Select(void) {
             break;
 
         default:
-            //printf("Error:%s, %d\r\n", __FILE__, __LINE__);
+            printf("Error:%s, %d\r\n", __FILE__, __LINE__);
             break;
         }
     //}
