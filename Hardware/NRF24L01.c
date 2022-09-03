@@ -362,3 +362,15 @@ uint8_t NRF_Rx_Dat(uint8_t *rxbuf)
   
   return ERROR;                    //没收到任何数据
 }
+
+extern uint8_t status;
+
+void Check(void) {
+	status = NRF_Check(); 
+
+  /*判断连接状态*/  
+    if(status == SUCCESS)	   
+     printf("\r\nNRF1与MCU连接成功\r\n");  
+    else	  
+     printf("\r\nNRF1与MCU连接失败\r\n");
+}

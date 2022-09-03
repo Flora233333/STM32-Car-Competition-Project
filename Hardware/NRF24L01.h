@@ -2,6 +2,7 @@
 #define __NRF24L01_H
 
 #include "stm32f10x.h"                  // Device header
+#include "bsp_usart.h"
 #include "Delay.h"
 
 #define TX_ADR_WIDTH 	5  	 //∑¢…‰µÿ÷∑øÌ∂»
@@ -110,5 +111,6 @@ uint8_t NRF_Rx_Dat(uint8_t *rxbuf);
 uint8_t NRF_Tx_Dat(uint8_t *txbuf);
 uint8_t NRF_Check(void);
 
+void Check(void);
 
 #endif

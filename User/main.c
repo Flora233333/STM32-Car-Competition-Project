@@ -1,12 +1,11 @@
 #include "main.h"
 
 union DATA rxbuf; //接收数据缓冲区
-uint8_t status;   //无线模块状态
 
 int main() {
 
 	SYS_Init();
-
+    //Go_Ahead();
 	while(1) {
 		MPU_Read();     //MPU6050数据读取
 
@@ -55,16 +54,6 @@ void SYS_Init()
    
 }
 
-void Check(void) {
-	status = NRF_Check(); 
-
-  /*判断连接状态*/  
-    if(status == SUCCESS)	   
-     printf("\r\nNRF1与MCU连接成功\r\n");  
-    else	  
-     printf("\r\nNRF1与MCU连接失败\r\n");
-}
-
 void Receive_Data(void) {
     /* 等待接收数据 */
 	status = NRF_Rx_Dat(rxbuf.raw);
@@ -85,3 +74,10 @@ void Receive_Data(void) {
 
     NRF_RX_Mode();  
 }
+
+//void TIM3_IRQHandler() {
+// 	if(TIM_GetITStatus(TIM3, TIM_IT_Update) == SET) {
+// 		
+// 		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
+// 	}
+// }

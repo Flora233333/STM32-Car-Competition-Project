@@ -16,9 +16,10 @@
 #include "Control.h"
 
 float pitch,roll,yaw; 		//欧拉角:俯仰角，偏航角，滚转角
-short aacx,aacy,aacz;		//加速度传感器原始数据  angular acceleration
-short gyrox,gyroy,gyroz;	//陀螺仪原始数据  gyroscope
+short aacx,aacy,aacz;		//加速度传感器原始数据  
+short gyrox,gyroy,gyroz;	//陀螺仪原始数据  
 short temp;					//温度
+uint8_t status;             //无线模块状态
 
 union DATA {
 	float Recive[4];        //float读取
@@ -27,6 +28,5 @@ union DATA {
 
 int main(void);				//主函数
 void SYS_Init(void);		//系统初始化总函数
-void Check(void);
 void Mode_Select(void);
 void Receive_Data(void);
