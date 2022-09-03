@@ -4,8 +4,10 @@ Control mode;
 
 int i = 0;
 float out = 0;
+
 float KP = 7;
 float KD = 0.07;
+
 float Ek = 0, Ek_0 = 0;
 
 int Motor_1 = 0, Motor_2 = 0;
@@ -98,13 +100,13 @@ void Mode_Select(void) {
 
         case 4: //左转(由发送的数据包决定左右转)
             Turn();
-            mode.angle = 90;
+            mode.angle = mode.angle;
             printf("Turn Left %d\r\n", mode.angle);
             break;
 
         case 5: //右转
             Turn();
-            mode.angle = -90;
+            mode.angle = -mode.angle;
             printf("Turn Right %d\r\n", mode.angle);
             break;
 
