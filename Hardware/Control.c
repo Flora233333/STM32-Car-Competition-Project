@@ -41,16 +41,16 @@ void Go_Ahead(void) {
     Motor1_SetDirct(1, 0);
     Motor2_SetDirct(1, 0);
 
-    TIM_SetCompare1(TIM1, 300);
-    TIM_SetCompare4(TIM1, 300);
+    TIM_SetCompare1(TIM1, 100);
+    TIM_SetCompare4(TIM1, 100);
 }
 
 void Go_Back(void) {
     Motor1_SetDirct(0, 1);
     Motor2_SetDirct(0, 1);
 
-    TIM_SetCompare1(TIM1, 300);
-    TIM_SetCompare4(TIM1, 300);
+    TIM_SetCompare1(TIM1, 100);
+    TIM_SetCompare4(TIM1, 100);
 }
 
 void Turn(void) {
