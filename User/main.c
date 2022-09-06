@@ -20,6 +20,7 @@ int main() {
 void SYS_Init()
 {
 	delay_init();                                    //DELAY初始化
+    
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);  //中断优先级分组函数
 
 	OLED_Init();									 //OLED初始化
@@ -33,9 +34,9 @@ void SYS_Init()
 
     Motor_Init();                                    //电机初始化
 
-    //PWM_Init();                                      //PWM初始化，原先在这一行时PWM没反应，调换至53行时PWM运行正常
+    //PWM_Init();                                    //PWM初始化，原先在这一行时PWM没反应，调换至53行时PWM运行正常
 
-    Timer3IT_Init();
+    Timer3IT_Init();                                 //打开定时器中断计算
 
 	while(mpu_dmp_init())                            //初始化mpu_dmp库
  	{
