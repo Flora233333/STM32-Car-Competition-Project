@@ -25,3 +25,7 @@
 
 ### 2022.9.3
     Optimizate Struct
+
+### 2022.9.6
+    Adjust PID
+    Complete Control Code
