@@ -17,8 +17,8 @@ void PWM_Init(void) {
     
 	TIM_TimeBaseInitStruct.TIM_ClockDivision = TIM_CKD_DIV1;     //这里跟TIM1 产生PWM波功能无关
 	TIM_TimeBaseInitStruct.TIM_CounterMode = TIM_CounterMode_Up; //向上计时模式
-	TIM_TimeBaseInitStruct.TIM_Period = 200 - 1;                 //试试 2400 和 3 ? 也是10KHz
-	TIM_TimeBaseInitStruct.TIM_Prescaler = 36 - 1;                 
+	TIM_TimeBaseInitStruct.TIM_Period = 1000 - 1;                 
+	TIM_TimeBaseInitStruct.TIM_Prescaler = 0;                 
 																							 
 	TIM_TimeBaseInit(TIM1,&TIM_TimeBaseInitStruct);              //初始化函数 让刚刚配置的参数 输入到对应寄存器里面
 	
@@ -46,15 +46,15 @@ void PWM_Init(void) {
 }
 
 void PWM_Restrict(int *Motor_1, int *Motor_2) {
-    if(*Motor_1 > 100)
-        *Motor_1 = 100;
-    if(*Motor_1 < -100)
-        *Motor_1 = -100;
+    if(*Motor_1 > 300)
+        *Motor_1 = 300;
+    if(*Motor_1 < -300)
+        *Motor_1 = -300;
 
-    if(*Motor_2 > 100)
-        *Motor_2 = 100;
-    if(*Motor_2 < -100)
-        *Motor_2 = -100;
+    if(*Motor_2 > 300)
+        *Motor_2 = 300;
+    if(*Motor_2 < -300)
+        *Motor_2 = -300;
 }
 
 void PWM_Updata(int Motor_1, int Motor_2) {

@@ -7,5 +7,7 @@ void Motor_Init(void);
 void Encoder_Init(void);
 void Motor1_SetDirct(uint16_t A1, uint16_t B1);
 void Motor2_SetDirct(uint16_t A2, uint16_t B2);
+int Get_M1Encoder(void);
+int Get_M2Encoder(void);
 
 #endif

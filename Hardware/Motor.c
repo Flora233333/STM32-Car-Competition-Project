@@ -85,6 +85,20 @@ void Motor2_SetDirct(uint16_t B1, uint16_t B2) {
 	GPIO_WriteBit(GPIOB, GPIO_Pin_12, (BitAction)B2);
 }
 
+int Get_M1Encoder(void) {
+    int num = 0;
+    num = (short)TIM_GetCounter(TIM2);
+    TIM_SetCounter(TIM2, 0);
+    return num;
+}
+
+int Get_M2Encoder(void) {
+    int num = 0;
+    num = (short)TIM_GetCounter(TIM4);
+    TIM_SetCounter(TIM4, 0);
+    return num;
+}
+
 void TIM2_IRQHandler(void) {
 	if(TIM_GetITStatus(TIM2, TIM_IT_Update) != 0)
 	{

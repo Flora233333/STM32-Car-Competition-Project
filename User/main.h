@@ -28,5 +28,4 @@ union DATA {
 
 int main(void);				//主函数
 void SYS_Init(void);		//系统初始化总函数
-void Mode_Select(void);
 void Receive_Data(void);

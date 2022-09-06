@@ -30,6 +30,7 @@ void Stop(void);
 void Go_Ahead(void);
 void Go_Back(void);
 void Turn(void);
+void Mode_Select(void);
 
 
 #endif

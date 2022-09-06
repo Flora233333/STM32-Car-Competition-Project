@@ -7,11 +7,12 @@ int main() {
 	SYS_Init();
     //Go_Ahead();
 	while(1) {
-        MPU_Read();     //MPU6050数据读取
 
- 		DATA_Report();  //MPU6050数据上报
+        // MPU_Read();     //MPU6050数据读取
+
+ 		// DATA_Report();  //MPU6050数据上报
         
-		Receive_Data(); //接收数据
+		// Receive_Data(); //接收数据
 
 	}
 }
@@ -34,7 +35,7 @@ void SYS_Init()
 
     //PWM_Init();                                      //PWM初始化，原先在这一行时PWM没反应，调换至53行时PWM运行正常
 
-    //Timer3IT_Init();
+    Timer3IT_Init();
 
 	while(mpu_dmp_init())                            //初始化mpu_dmp库
  	{
@@ -71,18 +72,22 @@ void Receive_Data(void) {
         }
     }	
     
-    Mode_Select();
+    //Mode_Select();
 
     NRF_RX_Mode();  
 }
 
-// void TIM3_IRQHandler() {
-// 	if(TIM_GetITStatus(TIM3, TIM_IT_Update) == SET) {
+void TIM3_IRQHandler() {
+ 	if(TIM_GetITStatus(TIM3, TIM_IT_Update) == SET) {
 
-// 		MPU_Read();     //MPU6050数据读取
+ 		MPU_Read();     //MPU6050数据读取
 
-// 		DATA_Report();  //MPU6050数据上报
+ 		DATA_Report();  //MPU6050数据上报
+		
+		Receive_Data();
 
-// 		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
-// 	}
-// }
+        Mode_Select();
+
+ 		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
+ 	}
+ }
