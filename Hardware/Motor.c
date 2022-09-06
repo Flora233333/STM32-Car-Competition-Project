@@ -13,6 +13,7 @@ void Motor_Init() {
     GPIO_InitStruct.GPIO_Pin =  GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
     GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
     GPIO_Init(GPIOB, &GPIO_InitStruct);
+    
     //轮胎不转可注释掉Encoder_Init();试试
     Encoder_Init();                                       //编码器初始化
 }

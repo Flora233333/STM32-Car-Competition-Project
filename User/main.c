@@ -7,11 +7,12 @@ int main() {
 	SYS_Init();
     //Go_Ahead();
 	while(1) {
-		MPU_Read();     //MPU6050数据读取
+        MPU_Read();     //MPU6050数据读取
 
-		DATA_Report();  //MPU6050数据上报
-
+ 		DATA_Report();  //MPU6050数据上报
+        
 		Receive_Data(); //接收数据
+
 	}
 }
 
@@ -75,9 +76,13 @@ void Receive_Data(void) {
     NRF_RX_Mode();  
 }
 
-//void TIM3_IRQHandler() {
+// void TIM3_IRQHandler() {
 // 	if(TIM_GetITStatus(TIM3, TIM_IT_Update) == SET) {
-// 		
+
+// 		MPU_Read();     //MPU6050数据读取
+
+// 		DATA_Report();  //MPU6050数据上报
+
 // 		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
 // 	}
 // }

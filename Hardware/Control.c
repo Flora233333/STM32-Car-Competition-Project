@@ -1,14 +1,11 @@
 #include "Control.h"
 
 Control mode;
+PID_TypeDef speed_control;
+PID_TypeDef angle_control;
 
 int i = 0;
-float out = 0;
-
-float KP = 7;
-float KD = 0.07;
-
-float Ek = 0, Ek_0 = 0;
+float Motor_out = 0;
 
 int Motor_1 = 0, Motor_2 = 0;
 
@@ -16,20 +13,47 @@ void Control_Init(void) {
     mode.flag = 0;                                   //初始化mode参数   
     mode.status = 1;
     mode.angle = 0;
+
+    angle_control.KP = 0.7;
+    angle_control.KD = 0.07;
+
+    //speed_control.SetPoint = 600;
+}
+
+float PID_Speed(float NextPoint) {
+    float Ek, out;
+
+    Ek = (float)speed_control.SetPoint - NextPoint;                 //偏差
+
+    if((Ek < 0.2f ) && (Ek > -0.2f))
+        Ek = 0.0f;
+
+    out = (speed_control.KP * Ek)                                   //E[k]项
+                - (speed_control.KI * speed_control.LastError)      //E[k-1]项
+                + (speed_control.KD * speed_control.PrevError);     //E[k-2]项
+
+    speed_control.PrevError = speed_control.LastError;              //存储误差，用于下次计算
+    speed_control.LastError = Ek;
+    
+    return out;  
 }
 
 float PID_Turn(float yaw) {
-	float Turn;     
+	float out;
+    float Ek;     
 
 	// Bias = mode.angle - 90;
 	// Turn = -Bias * KP - yaw * KD;
     Ek = mode.angle - yaw;
 
-    Turn = Ek * KP + (Ek - Ek_0) * KD;
+    //Ek = (Ek > 0 ? Ek : -Ek);
+    //printf("Ek = %f\r\n", Ek);
 
-    Ek_0 = Ek;
+    out = Ek * angle_control.KP + (Ek - angle_control.LastError) * angle_control.KD;
 
-	return Turn;
+    angle_control.LastError = Ek;
+
+	return out;
 }
 
 void Stop(void) {
@@ -56,10 +80,10 @@ void Go_Back(void) {
 void Turn(void) {
     printf("yaw = %f  ", MPU_Data.yaw);
 
-    out = PID_Turn(MPU_Data.yaw);
+    Motor_out = PID_Turn(MPU_Data.yaw);
 
-    Motor_1 = (int)out;
-    Motor_2 = (int)out;
+    Motor_1 = (int)Motor_out;
+    Motor_2 = (int)Motor_out;
 
     PWM_Restrict(&Motor_1, &Motor_2);
 
