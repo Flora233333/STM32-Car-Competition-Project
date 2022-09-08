@@ -5,7 +5,8 @@
 #include "Motor.h"
 
 void PWM_Init(void);
-void PWM_Restrict(int *Motor_1, int *Motor_2);
+void PWM_Restrict_Turn(int *Motor_1, int *Motor_2);
+void PWM_Restrict_Go(int *Motor_1, int *Motor_2);
 void PWM_Updata(int Motor_1, int Motor_2);
 
 #endif

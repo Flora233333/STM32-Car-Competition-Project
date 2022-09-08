@@ -4,6 +4,7 @@ Control mode;
 PID_TypeDef speed_control;
 PID_TypeDef angle_control;
 PID_TypeDef straight_control;
+PID_TypeDef distance_control;
 
 int i = 0;
 float Motor_out = 0;
@@ -31,13 +32,17 @@ void Control_Init(void) {
     straight_control.SetPoint = 0;
     straight_control.LastError = 0;
     straight_control.PrevError = 0;
+
+    distance_control.SetPoint = 0;
+    distance_control.LastError = 0;
+    distance_control.PrevError = 0;
 }
 
 float PID_Speed(int nowspeed) { //增量式PID
     int Ek = 0;
     static float out = 0;
 
-    //当前编码器值/转一圈的编码器值/速度环计算周期(10ms) = 转速
+    //当前编码器值/转一圈的编码器值/速度环计算周期(10ms) * 1000 = 转速(rad/s)
 
     Ek = speed_control.SetPoint - nowspeed;                     //偏差(nowspeed是编码器的读数)
 
@@ -45,12 +50,32 @@ float PID_Speed(int nowspeed) { //增量式PID
         Ek = 0;
 
     out = out 
-            + (speed_control.KP * Ek)                           //E[k]项
-            - (speed_control.KI * speed_control.LastError)      //E[k-1]项
-            + (speed_control.KD * speed_control.PrevError);     //E[k-2]项
+            + (speed_control.KP * (Ek - speed_control.LastError));                        
+            + (speed_control.KI * Ek) ;     
+            + (speed_control.KD * (Ek - 2 * speed_control.LastError + speed_control.PrevError));     
 
     speed_control.PrevError = speed_control.LastError;          //存储误差，用于下次计算
     speed_control.LastError = Ek;
+    
+    return out;  
+}
+
+float PID_Distance(int encoder) { //增量式PID
+    int Ek = 0;
+    static float out = 0;
+
+    Ek = distance_control.SetPoint - encoder;                     //偏差(nowspeed是编码器的读数)
+
+    if((Ek < 5 ) && (Ek > -5))
+        Ek = 0;
+
+    out = out 
+            + (distance_control.KP * (Ek - distance_control.LastError));                        
+            + (distance_control.KI * Ek) ;     
+            + (distance_control.KD * (Ek - 2 * distance_control.LastError + distance_control.PrevError));     
+
+    distance_control.PrevError = distance_control.LastError;          //存储误差，用于下次计算
+    distance_control.LastError = Ek;
     
     return out;  
 }
@@ -89,9 +114,9 @@ float PID_Turn(float yaw) { //位置式PID,但基于姿态角
     out = Ek * angle_control.KP - (Ek - angle_control.LastError) * angle_control.KD;
 
     // out = out
-    //         + (angle_control.KP * Ek)                           //增量式PID                          
-    //         - (angle_control.KI * angle_control.LastError)      
-    //         + (angle_control.KD * angle_control.PrevError);
+    //         + (angle_control.KP * (Ek - angle_control.LastError))                           //增量式PID                          
+    //         + (angle_control.KI * Ek)      
+    //         + (angle_control.KD * (Ek - 2 * angle_control.LastError + angle_control.PrevError));
 
     // angle_control.PrevError = angle_control.LastError;          //存储误差，用于下次计算
     // angle_control.LastError = Ek;
@@ -110,13 +135,6 @@ float PID_Straight(float yaw) {
 
     if((Ek < 1) && (Ek > -1))
         Ek = 0;
-
-    // out =  (straight_control.KP * Ek)                                 //增量式PID                          
-    //        - (straight_control.KI * straight_control.LastError)      
-    //        + (straight_control.KD * straight_control.PrevError);
-    
-    // straight_control.PrevError = straight_control.LastError;          //存储误差，用于下次计算
-    // straight_control.LastError = Ek;
           
 	out = Ek * straight_control.KP - (Ek - straight_control.LastError) * straight_control.KD; //位置式PID
 
@@ -131,24 +149,27 @@ void Stop(void) {
 }
 
 void Go_Ahead(void) {
-    int straight;
-    // int Left_speed, right_speed;
-    // int Encoder_Left, Encoder_Right;
+    int straight = 0;
+    // int Left_speed = 0, right_speed = 0;
+    // int Encoder_Left = 0, Encoder_Right = 0;
+    // int rad_Left = 0, rad_Right = 0;
 
     // Encoder_Left = Get_M1Encoder();
     // Encoder_Right = -Get_M2Encoder();
+    // rad_Left = Encoder_Left / 780 / 10 * 1000;
+    // rad_Right = Encoder_Right / 780 / 10 * 1000;
 
     Motor1_SetDirct(1, 0);
     Motor2_SetDirct(1, 0);
 
     straight = (int)PID_Straight(MPU_Data.yaw);
-    // Left_speed = PID_Speed(Encoder_Left);
-    // right_speed = PID_Speed(Encoder_Right);	
+    // Left_speed = PID_Speed(rad_Left);
+    // right_speed = PID_Speed(rad_Right);	
 
     Motor_1 = 500 + straight;                  
     Motor_2 = 500 - straight;
 
-    // PWM_Restrict(&Motor_1, &Motor_2);
+    PWM_Restrict_Go(&Motor_1, &Motor_2);
 
     // PWM_Updata(Motor_1, Motor_2);         					
 	
@@ -172,7 +193,7 @@ void Turn(void) {
     Motor_1 = (int)Motor_out;
     Motor_2 = -(int)Motor_out;
 
-    PWM_Restrict(&Motor_1, &Motor_2);
+    PWM_Restrict_Turn(&Motor_1, &Motor_2);
 
     PWM_Updata(Motor_1, Motor_2);
     
@@ -184,6 +205,20 @@ void Turn(void) {
             mode.status = 0;         //停车
         }
     }
+}
+
+void Turn_Encoder(void) {
+    int Encoder_Left = 0, Encoder_Right = 0;
+
+    Encoder_Left = TIM_GetCounter(TIM2);
+    Encoder_Right = TIM_GetCounter(TIM4);
+
+    Motor_1 = (int)PID_Turn_Encoder(Encoder_Left, 9000, &LastEk_left);
+    Motor_2 = -(int)PID_Turn_Encoder(Encoder_Right, 10800, &LastEk_right);
+
+    PWM_Restrict_Go(&Motor_1, &Motor_2);
+
+    PWM_Updata(Motor_1, Motor_2);
 }
 
 void Mode_Select(void) {
@@ -220,10 +255,19 @@ void Mode_Select(void) {
             Turn();
             printf("Turn Right %d\r\n", mode.angle);
             break;
+        case 6:
 
+            break;
         default:
             printf("Error:%s, %d\r\n", __FILE__, __LINE__);
             break;
         }
     //}
+}
+
+void Print_Wave() {
+    int SetPoint = speed_control.SetPoint;
+    int now = (int)((short)TIM_GetCounter(TIM2) / 780 / 10 * 1000); //rad/s
+
+    printf("ch: %d,%d\n", SetPoint, now);
 }

@@ -36,8 +36,6 @@ void SYS_Init()
 
     //PWM_Init();                                    //PWM初始化，原先在这一行时PWM没反应，调换至53行时PWM运行正常
 
-    Timer3IT_Init();                                 //打开定时器中断计算
-
 	while(mpu_dmp_init())                            //初始化mpu_dmp库
  	{
 		OLED_ShowString(1,1,"Failed");			 	 //显示字符串                          
@@ -51,10 +49,11 @@ void SYS_Init()
 	OLED_ShowString(1,5,"OK!");						 //显示字符串
 	delay_ms(999);									 //延时初界面显示
     
-    //Motor_Init();                                    //电机初始化
+    //Motor_Init();                                  //电机初始化
    
     PWM_Init();                                      //PWM初始化，长延时前面不要开定时器等时效性的东西
-   
+
+    Timer3IT_Init();                                 //打开定时器中断计算
 }
 
 void Receive_Data(void) {
