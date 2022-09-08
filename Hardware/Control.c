@@ -27,8 +27,8 @@ void Control_Init(void) {
     speed_control.LastError = 0;
     speed_control.PrevError = 0;
     
-    straight_control.KP = 30;
-    straight_control.KD = 0;
+    straight_control.KP = 10;
+    straight_control.KD = 2.5;
     straight_control.SetPoint = 0;
     straight_control.LastError = 0;
     straight_control.PrevError = 0;
@@ -132,9 +132,6 @@ float PID_Straight(float yaw) {
     //static float out = 0;
 
     Ek = yaw - straight_control.SetPoint;
-
-    if((Ek < 1) && (Ek > -1))
-        Ek = 0;
           
 	out = Ek * straight_control.KP - (Ek - straight_control.LastError) * straight_control.KD; //位置式PID
 
@@ -166,8 +163,8 @@ void Go_Ahead(void) {
     // Left_speed = PID_Speed(rad_Left);
     // right_speed = PID_Speed(rad_Right);	
 
-    Motor_1 = 500 + straight;                  
-    Motor_2 = 500 - straight;
+    Motor_1 = 500 - straight;                  
+    Motor_2 = 500 + straight;
 
     PWM_Restrict_Go(&Motor_1, &Motor_2);
 
